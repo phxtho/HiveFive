@@ -1,0 +1,24 @@
+{
+  "name": "hive-five-server",
+  "version": "1.0.0",
+  "description": "A node server for the hive five application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phxtho/HiveFive.git"
+  },
+  "author": "Phatho",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phxtho/HiveFive/issues"
+  },
+  "homepage": "https://github.com/phxtho/HiveFive#readme",
+  "dependencies": {
+    "@types/socket.io": "^2.1.2",
+    "express": "^4.17.0",
+    "socket.io": "^2.2.0"
+  }
+}
