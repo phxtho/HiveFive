@@ -1,0 +1,7 @@
+mat-sidenav {
+    background-color: darkgray;
+}
+
+mat-sidenav-content {
+    background-color: rgb(255, 230, 0)  
+}

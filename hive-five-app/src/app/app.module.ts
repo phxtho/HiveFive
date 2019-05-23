@@ -6,11 +6,12 @@ import { NgModule } from '@angular/core';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 // Angular Material Imports
-import {MatToolbarModule, MatIconModule} from '@angular/material';
+import {MatToolbarModule, MatIconModule, MatSidenavModule} from '@angular/material';
 
 // Declarations
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 // Address where scoket server is listening
 const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
@@ -18,14 +19,16 @@ const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent
+    NavbarComponent,
+    SidenavComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     SocketIoModule.forRoot(config),
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent]
