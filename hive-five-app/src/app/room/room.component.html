@@ -1,0 +1,6 @@
+<div *ngFor="let prevMessage of room.messages" >
+  <span>{{prevMessage.sender}}</span>
+  <span>{{prevMessage.content}}</span>
+</div>
+<input [(ngModel)]="message.content" />
+<button (click)="sendMessage()">Send</button>
