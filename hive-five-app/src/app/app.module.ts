@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RoomComponent } from './room/room.component';
 import { RoomListComponent } from './room-list/room-list.component';
+import { MessageComponent } from './message/message.component';
 
 // Server listening on port 4444
 const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
@@ -19,7 +20,8 @@ const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
     AppComponent,
     NavbarComponent,
     RoomComponent,
-    RoomListComponent
+    RoomListComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,

@@ -10,7 +10,7 @@ import { Room } from '../models/room';
 })
 export class RoomComponent implements OnInit {
   room: Room;
-  message: Message;
+  currentMessage: Message;
 
   constructor(private chatService: ChatService) { }
 
@@ -19,7 +19,9 @@ export class RoomComponent implements OnInit {
   }
 
   sendMessage() {
-    this.chatService.sendMessage(this.room.id, this.message );
-    this.message.content = '';
+    // Send message to server
+    this.chatService.sendMessage(this.room.id, this.currentMessage );
+    // Clear input field
+    this.currentMessage.content = '';
   }
 }
