@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+import { Room } from '../models/room';
 
 import { ChatService } from '../services/chat.service';
 
@@ -9,14 +10,15 @@ import { ChatService } from '../services/chat.service';
   styleUrls: ['./room-list.component.scss']
 })
 export class RoomListComponent implements OnInit, OnDestroy {
-  rooms: Observable<string[]>;
+  rooms: Room[];
   currentRoomId: string;
+  private roomListSub: Subscription;
   private roomSub: Subscription;
 
   constructor(private chatService: ChatService) { }
 
   ngOnInit() {
-    this.rooms = this.chatService.rooms;
+    this.roomListSub = this.chatService.rooms.subscribe(rooms => { this.rooms = rooms; console.log(rooms); });
     this.roomSub = this.chatService.currentRoom.subscribe(room => this.currentRoomId = room.id);
   }
 

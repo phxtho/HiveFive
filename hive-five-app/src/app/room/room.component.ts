@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../services/chat.service';
 import { Message } from '../models/message';
 import { Room } from '../models/room';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-room',
@@ -11,11 +12,17 @@ import { Room } from '../models/room';
 export class RoomComponent implements OnInit {
   room: Room;
   currentMessage: Message;
+  messages: Subscription;
+  typing: Subscription;
 
   constructor(private chatService: ChatService) { }
 
   ngOnInit() {
     // loop through all the message history and display it
+    this.typing = this.chatService.messages.subscribe(typing => console.log(typing));
+    this.messages = this.chatService.messages.subscribe(message =>
+      this.room.messages.push(message)
+    );
   }
 
   sendMessage() {

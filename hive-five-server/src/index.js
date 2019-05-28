@@ -8,7 +8,53 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
 // In memory storage of our rooms and their message histories
-const rooms = [];
+let rooms = [
+    {
+        id: 'C#',
+        messages: [
+            {
+                sender: 'Ninjashwang',
+                content: 'Yeet!'
+            }
+        ]
+    },
+    {
+        id: 'Java',
+        messages: [
+            {
+                sender: 'Ninjashwang',
+                content: 'Yeet!'
+            }
+        ]
+    },
+    {
+        id: 'Web',
+        messages: [
+            {
+                sender: 'Ninjashwang',
+                content: 'Yeet!'
+            }
+        ]
+    },
+    {
+        id: 'Design',
+        messages: [
+            {
+                sender: 'Ninjashwang',
+                content: 'Yeet!'
+            }
+        ]
+    },
+    {
+        id: 'Git',
+        messages: [
+            {
+                sender: 'Ninjashwang',
+                content: 'Yeet!'
+            }
+        ]
+    }
+];
 
 // When client connects to server fire this call back
 io.on('connection', socket => {
@@ -36,14 +82,14 @@ io.on('connection', socket => {
         // Store message history
         rooms[data.roomId].messages.push(data.message);
         // Post message to the rest of the room
-        socket.to(data.roomId).emit('new-message',data.message); 
+        socket.to(data.roomId).emit('new-message', data.message);
     });
 
-    socket.on('typing', (roomId, data) => {
-        socket.to(roomId).broadcast.emit('typing', data);
+    socket.on('typing', (data) => {
+        socket.to(data.roomId).broadcast.emit('typing', data.typingInfo);
     });
 
-    io.emit('rooms', Object.keys(rooms));
+    io.emit('rooms', rooms);
 
     console.log(`Socket ${socket.id} has connected`);
 });

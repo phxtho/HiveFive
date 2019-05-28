@@ -1,7 +1,3 @@
 <div class="sidenav bg-dark">
-  <span>C#</span>
-  <span>Java</span>
-  <span>Web</span>
-  <span>Design</span>
-  <span>Databases</span>
+  <span *ngFor='let room of rooms'>{{room.id}}</span>
 </div>
