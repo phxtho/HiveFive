@@ -37,6 +37,18 @@ export class RoomListComponent implements OnInit, OnDestroy {
   }
 
   loadRoom(chosenRoom: Room) {
+    console.log("loadRoom: " + chosenRoom.id);
     this.chatService.getRoom(chosenRoom.id);
+    this.currentRoomId = chosenRoom.id;
+  }
+
+  nameToId(name: string) {
+    let index = 0;
+    for (const iterator of this.rooms) {
+      if (name === iterator.id) {
+        return index;
+      }
+      index += 1;
+    }
   }
 }

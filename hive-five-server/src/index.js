@@ -13,12 +13,17 @@ let rooms = [
         id: 'C#',
         messages: [
             {
+<<<<<<< Updated upstream
                 sender: 'Ninjashwang',
                 content: 'Yeet!'
             },
             {
                 sender: 'Phatho',
                 content: 'FOETSEK!'
+=======
+                sender: 'C#Sender',
+                content: 'C#Message!'
+>>>>>>> Stashed changes
             }
         ]
     },
@@ -26,12 +31,8 @@ let rooms = [
         id: 'Java',
         messages: [
             {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
+                sender: 'JavaSender',
+                content: 'JavaMessage!'
             }
         ]
     },
@@ -39,12 +40,8 @@ let rooms = [
         id: 'Web',
         messages: [
             {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
+                sender: 'WebSender',
+                content: 'WebMessage!'
             }
         ]
     },
@@ -52,25 +49,17 @@ let rooms = [
         id: 'Design',
         messages: [
             {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
+                sender: 'DesignSender',
+                content: 'DesignMessage!'
             },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
-            }
         ]
     },
     {
         id: 'Git',
         messages: [
             {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
+                sender: 'GitSender',
+                content: 'GitMessage!'
             }
         ]
     }
@@ -102,13 +91,7 @@ io.on('connection', socket => {
     socket.on('getRoom', roomId => {
         safeJoin(roomId);
         socket.emit('room', rooms[roomId]);
-    });
-
-    socket.on('addRoom', room => {
-        rooms[room.id] = room;
-        safeJoin(room.id);
-        io.emit('rooms', Object.keys(rooms));
-        socket.emit('room', room);
+        io.emit('rooms', rooms);
     });
 
     socket.on('new-message', (data) => {

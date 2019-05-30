@@ -35,5 +35,7 @@ export class RoomComponent implements OnInit {
     this.chatService.sendMessage(this.room.id, {sender: this.sender, content: this.currentMessage});
     // Clear input field
     this.currentMessage = '';
+
+    console.log("Sending: " + this.room.id);
   }
 }
