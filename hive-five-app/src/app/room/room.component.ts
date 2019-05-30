@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, NgZone } from '@angular/core';
 import { ChatService } from '../services/chat.service';
-import { Message } from '../models/message';
 import { Room } from '../models/room';
 import { Subscription } from 'rxjs';
 
@@ -12,7 +11,7 @@ import { Subscription } from 'rxjs';
 export class RoomComponent implements OnInit {
   @Input() room: Room;
   @Input() sender: string;
-  currentMessage: Message;
+  currentMessage: string;
   messages: Subscription;
   typing: Subscription;
 
@@ -25,15 +24,15 @@ export class RoomComponent implements OnInit {
       this.room.messages.push(message)
     );
 
-    console.log("entered"); //turn on the server
+    console.log("entered"); // turn on the server
     console.log(this.room);
   }
 
   sendMessage() {
     console.log("sent");
     // Send message to server
-    this.chatService.sendMessage(this.room.id, this.sender, this.currentMessage );
+    this.chatService.sendMessage(this.room.id, {sender: this.sender, content: this.currentMessage});
     // Clear input field
-    this.currentMessage.content = '';
+    this.currentMessage = '';
   }
 }

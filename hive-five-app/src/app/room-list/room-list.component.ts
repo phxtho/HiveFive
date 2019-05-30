@@ -11,7 +11,7 @@ import { ChatService } from '../services/chat.service';
 })
 export class RoomListComponent implements OnInit, OnDestroy {
   rooms: Room[];
-  
+
   currentRoomId: string;
   private roomSub: Subscription;
   private roomListSub: Subscription;
@@ -25,9 +25,9 @@ export class RoomListComponent implements OnInit, OnDestroy {
       this.currentRoomId = room.id;
       console.log('roomListID:' + this.currentRoomId);
     });
-    this.roomListSub = this.chatService.rooms.subscribe(rooms => { 
-      this.rooms = rooms; 
-      console.log('roomList: ' + this.rooms); 
+    this.roomListSub = this.chatService.rooms.subscribe(rooms => {
+      this.rooms = rooms;
+      console.log('roomList: ' + this.rooms);
     });
   }
 
@@ -36,12 +36,7 @@ export class RoomListComponent implements OnInit, OnDestroy {
     this.roomListSub.unsubscribe();
   }
 
-  getRoom(chosenRoom: Room) {
+  loadRoom(chosenRoom: Room) {
     this.chatService.getRoom(chosenRoom.id);
   }
-
-  loadRoom(id: string) {
-    this.chatService.getRoom(id);
-  }
-
 }

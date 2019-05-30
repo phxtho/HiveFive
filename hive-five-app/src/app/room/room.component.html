@@ -10,8 +10,8 @@
     </ng-template>
   </div>
   <div class="message-input--wrapper">
-    <span *ngIf="currentMessage else noContent">
-      <input [(ngModel)]="currentMessage.content" />
+    <span>
+      <input [(ngModel)]="currentMessage" />
     </span>
     <ng-template #noContent>
       <input/>
