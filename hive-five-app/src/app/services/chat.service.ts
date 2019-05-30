@@ -21,11 +21,11 @@ export class ChatService {
     this.socket.emit('getRoom', id);
   }
 
-  sendMessage(roomId: string, message: Message) {
+  sendMessage(roomId: string, senderName: string, message: Message) {
+    message.sender = senderName;
     this.socket.emit('new-message', { roomId, message });
   }
 
-  // This can be deleted?
   // getMessages() {
   //   let observable = new Observable(observer => {
   //     this.socket.on('new-message', data => {

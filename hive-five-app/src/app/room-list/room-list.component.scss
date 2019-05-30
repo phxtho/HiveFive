@@ -1,22 +1,39 @@
 .sidenav {
-    position: fixed;
-    height: 100%;
-    width: 150px;
-    top: 50px;
-    left: 0;
-    overflow-x: hidden;
-    padding-top: 20px;  
-      span {
-        padding: 6px  8px  6px  16px;
-        text-decoration: none;
-        font-size: 25px;
-        font-family: 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
-        color: #818181;
-        display: block;
-      }.selected {
-        color: #e1e1e1;
-      }:hover {
-        color: #f1f1f1;
-        cursor: pointer;
-      }
+  position: fixed;
+  height: 100%;
+  width: 150px;
+  top: 50px;
+  left: 0;
+  overflow-x: hidden;
+  padding-top: 20px;  
+  flex-basis: 15%;
+  flex-shrink: 0;
+  flex-grow: 0;
+  background-color: #300d4f;
+  color: #fff;
+  padding: 10px 10px;
+    span {
+      padding: 6px  8px  6px  16px;
+      text-decoration: none;
+      font-size: 25px;
+      font-family: 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
+      color: #818181;
+      display: block;
+    }.selected {
+      color: #e1e1e1;
+    }:hover {
+      color: #f1f1f1;
+      cursor: pointer;
+    }
   }
+
+.thisistheone {
+  width: 100%;
+  position: relative;
+  left: 150px;
+  height: calc(100vh - 50px);
+}
+
+.spread {
+  width: 100%;
+}

@@ -58,7 +58,7 @@ let rooms = [
 
 // When client connects to server fire this call back
 io.on('connection', socket => {
-
+    
     let previousRoomId;
     const safeJoin = currentRoomId => {
         socket.leave(previousRoomId);
@@ -90,6 +90,9 @@ io.on('connection', socket => {
     });
 
     io.emit('rooms', rooms);
+    io.emit('room', rooms[0]);
+
+    socket.join(rooms[0], () => console.log(`Socket ${socket.id} joined room C#`));
 
     console.log(`Socket ${socket.id} has connected`);
 });

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, Input } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Room } from '../models/room';
 
@@ -11,19 +11,33 @@ import { ChatService } from '../services/chat.service';
 })
 export class RoomListComponent implements OnInit, OnDestroy {
   rooms: Room[];
+  
   currentRoomId: string;
-  private roomListSub: Subscription;
   private roomSub: Subscription;
+  private roomListSub: Subscription;
+
+  sender: string = "Anonymous";
 
   constructor(private chatService: ChatService) { }
 
   ngOnInit() {
-    this.roomListSub = this.chatService.rooms.subscribe(rooms => { this.rooms = rooms; console.log(rooms); });
-    this.roomSub = this.chatService.currentRoom.subscribe(room => this.currentRoomId = room.id);
+    this.roomSub = this.chatService.currentRoom.subscribe(room => {
+      this.currentRoomId = room.id;
+      console.log('roomListID:' + this.currentRoomId);
+    });
+    this.roomListSub = this.chatService.rooms.subscribe(rooms => { 
+      this.rooms = rooms; 
+      console.log('roomList: ' + this.rooms); 
+    });
   }
 
   ngOnDestroy() {
     this.roomSub.unsubscribe();
+    this.roomListSub.unsubscribe();
+  }
+
+  getRoom(chosenRoom: Room) {
+    this.chatService.getRoom(chosenRoom.id);
   }
 
   loadRoom(id: string) {
