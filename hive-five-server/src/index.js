@@ -13,17 +13,8 @@ let rooms = [
         id: 'C#',
         messages: [
             {
-<<<<<<< Updated upstream
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
-=======
                 sender: 'C#Sender',
                 content: 'C#Message!'
->>>>>>> Stashed changes
             }
         ]
     },
