@@ -1,35 +1,98 @@
+// App setup
 const app = require('express')();
+
+// App Server setup
 const http = require('http').Server(app);
+
+// Socket setup
 const io = require('socket.io')(http);
 
-const documents = {};
+// In memory storage of our rooms and their message histories
+let rooms = [
+    {
+        id: 'C#',
+        messages: [
+            {
+                sender: 'Ninjashwang',
+                content: 'Yeet!'
+            }
+        ]
+    },
+    {
+        id: 'Java',
+        messages: [
+            {
+                sender: 'Ninjashwang',
+                content: 'Yeet!'
+            }
+        ]
+    },
+    {
+        id: 'Web',
+        messages: [
+            {
+                sender: 'Ninjashwang',
+                content: 'Yeet!'
+            }
+        ]
+    },
+    {
+        id: 'Design',
+        messages: [
+            {
+                sender: 'Ninjashwang',
+                content: 'Yeet!'
+            }
+        ]
+    },
+    {
+        id: 'Git',
+        messages: [
+            {
+                sender: 'Ninjashwang',
+                content: 'Yeet!'
+            }
+        ]
+    }
+];
 
+// When client connects to server fire this call back
 io.on('connection', socket => {
-    let previousId;
-    const safeJoin = currentId => {
-        socket.leave(previousId);
-        socket.join(currentId, () => console.log(`Socket ${socket.id} joined room ${currentId}`));
-        previousId = currentId;
+    
+    let previousRoomId;
+    const safeJoin = currentRoomId => {
+        socket.leave(previousRoomId);
+        socket.join(currentRoomId, () => console.log(`Socket ${socket.id} joined room ${currentRoomId}`));
+        previousRoomId = currentRoomId;
     }
 
-    socket.on('getDoc', docId => {
-        safeJoin(docId);
-        socket.emit('document', documents[docId]);
+    socket.on('getRoom', roomId => {
+        safeJoin(roomId);
+        socket.emit('room', rooms[roomId]);
     });
 
-    socket.on('addDoc', doc => {
-        documents[doc.id] = doc;
-        safeJoin(doc.id);
-        io.emit('documents', Object.keys(documents));
-        socket.emit('document', doc);
+    socket.on('addRoom', room => {
+        rooms[room.id] = room;
+        safeJoin(room.id);
+        io.emit('rooms', Object.keys(rooms));
+        socket.emit('room', room);
     });
 
-    socket.on('editDoc', doc => {
-        documents[doc.id] = doc;
-        socket.to(doc.id).emit('document', doc);
+    socket.on('new-message', (data) => {
+        // Store message history
+        rooms[data.roomId].messages.push(data.message);
+        // Post message to the rest of the room
+        socket.to(data.roomId).emit('new-message', data.message);
     });
 
-    io.emit('documents', Object.keys(documents));
+    socket.on('typing', (data) => {
+        socket.to(data.roomId).broadcast.emit('typing', data.typingInfo);
+    });
+
+    io.emit('rooms', rooms);
+    io.emit('room', rooms[0]);
+
+    socket.join(rooms[0], () => console.log(`Socket ${socket.id} joined room C#`));
 
     console.log(`Socket ${socket.id} has connected`);
 });

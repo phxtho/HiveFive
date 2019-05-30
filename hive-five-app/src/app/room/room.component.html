@@ -1,0 +1,21 @@
+<div class = "full-room">
+  <div class = "messages">
+    <div *ngIf="room else noRoom">
+      <div *ngFor="let prevMessage of room.messages">
+        <app-message [message]=prevMessage></app-message>
+      </div>
+    </div>
+    <ng-template #noRoom>
+      Join a chatroom to start a conversation!
+    </ng-template>
+  </div>
+  <div class="message-input--wrapper">
+    <span *ngIf="currentMessage else noContent">
+      <input [(ngModel)]="currentMessage.content" />
+    </span>
+    <ng-template #noContent>
+      <input/>
+    </ng-template>
+    <button (click)="sendMessage()">Send</button>
+  </div>
+</div>

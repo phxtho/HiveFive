@@ -1,0 +1,8 @@
+<div class="sidenav bg-dark container">
+  <input [(ngModel)]="sender" placeholder="Anonymous"/>
+  <span *ngFor='let room of rooms' (click)='getRoom(room)'>{{room.id}}</span>
+</div>
+
+<span class='thisistheone'> 
+  <app-room class='jusitfied-center spread' [room]='rooms[0]'[sender]=sender></app-room>
+</span>
