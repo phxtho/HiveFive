@@ -15,6 +15,10 @@ let rooms = [
             {
                 sender: 'Ninjashwang',
                 content: 'Yeet!'
+            },
+            {
+                sender: 'Phatho',
+                content: 'FOETSEK!'
             }
         ]
     },
@@ -24,6 +28,10 @@ let rooms = [
             {
                 sender: 'Ninjashwang',
                 content: 'Yeet!'
+            },
+            {
+                sender: 'Phatho',
+                content: 'FOETSEK!'
             }
         ]
     },
@@ -33,6 +41,10 @@ let rooms = [
             {
                 sender: 'Ninjashwang',
                 content: 'Yeet!'
+            },
+            {
+                sender: 'Phatho',
+                content: 'FOETSEK!'
             }
         ]
     },
@@ -42,6 +54,10 @@ let rooms = [
             {
                 sender: 'Ninjashwang',
                 content: 'Yeet!'
+            },
+            {
+                sender: 'Phatho',
+                content: 'FOETSEK!'
             }
         ]
     },
@@ -51,6 +67,10 @@ let rooms = [
             {
                 sender: 'Ninjashwang',
                 content: 'Yeet!'
+            },
+            {
+                sender: 'Phatho',
+                content: 'FOETSEK!'
             }
         ]
     }
