@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, NgZone } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ChatService } from '../services/chat.service';
 import { Room } from '../models/room';
 import { Subscription } from 'rxjs';
@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
-  styleUrls: ['./room.component.scss']
+  styleUrls: ['./room.component.scss'],
 })
 export class RoomComponent implements OnInit {
   @Input() room: Room;
@@ -20,9 +20,10 @@ export class RoomComponent implements OnInit {
   ngOnInit() {
     // loop through all the message history and display it
     this.typing = this.chatService.messages.subscribe(typing => console.log(typing));
-    this.messages = this.chatService.messages.subscribe(message =>
-      this.room.messages.push(message)
-    );
+    this.messages = this.chatService.messages.subscribe(message => {
+      this.room.messages.push(message);
+      console.log('in room.init ');
+    });
 
     console.log("entered"); // turn on the server
     console.log(this.room);

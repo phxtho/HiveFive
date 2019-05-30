@@ -118,6 +118,7 @@ io.on('connection', socket => {
         rooms[index].messages.push(data.message);
         // Post message to the rest of the room
         socket.to(data.roomId).emit('new-message', data.message);
+        io.emit('rooms', rooms);
     });
 
     socket.on('typing', (data) => {
