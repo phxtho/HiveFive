@@ -13,68 +13,8 @@ let rooms = [
         id: 'C#',
         messages: [
             {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
-            },
-            {
-                sender: 'Ninjakjshwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
-            },
-            {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
-            },
-            {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
-            },
-            {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
-            },
-            {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
-            },
-            {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
-            },
-            {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
+                sender: 'C#',
+                content: ''
             }
         ]
     },
@@ -82,12 +22,8 @@ let rooms = [
         id: 'Java',
         messages: [
             {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
+                sender: 'Java',
+                content: ''
             }
         ]
     },
@@ -95,12 +31,8 @@ let rooms = [
         id: 'Web',
         messages: [
             {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
+                sender: 'Web',
+                content: ''
             }
         ]
     },
@@ -108,12 +40,8 @@ let rooms = [
         id: 'Design',
         messages: [
             {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
+                sender: 'Design',
+                content: ''
             }
         ]
     },
@@ -121,12 +49,8 @@ let rooms = [
         id: 'Git',
         messages: [
             {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
+                sender: 'Git',
+                content: ''
             }
         ]
     }
@@ -148,10 +72,21 @@ function findIndexByID(id) {
 // When client connects to server fire this call back
 io.on('connection', socket => {
     
-    let previousRoomId;
+    console.log(`on connect:`);
+    console.log(socket.adapter.rooms)
+
     const safeJoin = currentRoomId => {
-        socket.leave(previousRoomId);
-        socket.join(currentRoomId, () => console.log(`Socket ${socket.id} joined room ${currentRoomId}`));
+        //socket.leave(previousRoomId);
+        socket.leaveAll();
+        //socket.adapter.add(socket.id, currentRoomId, () => console.log("this worked!"));
+        // console.log(`in safe join`);
+        // console.log(socket.adapter.rooms)
+        
+        socket.join(currentRoomId, () => {
+            // console.log(`Socket ${socket.id} joined room ${currentRoomId}`);
+            // console.log(`in socketjoin`);
+            // console.log(socket.adapter.rooms)
+        });
         previousRoomId = currentRoomId;
     }
 
@@ -161,14 +96,20 @@ io.on('connection', socket => {
         io.emit('rooms', rooms);
     });
 
-    socket.on('new-message', (data) => {
+    socket.on('send-message', (data) => {
         console.log(data);
         let index = findIndexByID(data.roomId);
         // Store message history
         rooms[index].messages.push(data.message);
         // Post message to the rest of the room
-        socket.to(data.roomId).emit('new-message', data.message);
-        io.emit('rooms', rooms);
+        // console.log('data.message:')
+        // console.log(data.message);
+      
+        io.to(data.roomId).emit('new-message', data.message);
+        socket.join(data.roomId);
+        console.log(io.sockets.adapter.rooms[data.roomId]);
+        //io.emit('new-message',data.message);
+        //io.emit('rooms', rooms);
     });
 
     socket.on('typing', (data) => {
@@ -177,8 +118,6 @@ io.on('connection', socket => {
 
     io.emit('rooms', rooms);
     io.emit('room', rooms[0]);
-
-    socket.join(rooms[0], () => console.log(`Socket ${socket.id} joined room C#`));
 
     console.log(`Socket ${socket.id} has connected`);
 });

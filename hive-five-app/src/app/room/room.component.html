@@ -1,8 +1,10 @@
 <div class="full-room">
   <div class="messages">
-    <div *ngFor="let prevMessage of room.messages">
-      <app-message [message]=prevMessage></app-message>
-    </div>
+    <ng-container *ngIf="!!room">
+      <div *ngFor="let prevMessage of room.messages">
+        <app-message [message]=prevMessage></app-message>
+      </div>
+    </ng-container>
   </div>
   <div class="message-input--wrapper">
     <input [(ngModel)]="currentMessage" />

@@ -13,18 +13,23 @@ export class RoomListComponent implements OnInit, OnDestroy {
   rooms: Room[];
 
   currentRoomId: string;
+  currentRoom: Room;
+  sender: string = "Anonymous";
   private roomSub: Subscription;
   private roomListSub: Subscription;
-
-  sender: string = "Anonymous";
 
   constructor(private chatService: ChatService) { }
 
   ngOnInit() {
+
     this.roomSub = this.chatService.currentRoom.subscribe(room => {
-      this.currentRoomId = room.id;
-      console.log('roomListID:' + this.currentRoomId);
+      if (!!room) {
+        this.currentRoomId = room.id;
+        console.log('roomListID: ' + this.currentRoomId);
+        this.currentRoom = this.rooms[this.nameToId(this.currentRoomId)];
+      }
     });
+
     this.roomListSub = this.chatService.rooms.subscribe(rooms => {
       this.rooms = rooms;
       console.log('roomList: ' + this.rooms);
@@ -39,16 +44,18 @@ export class RoomListComponent implements OnInit, OnDestroy {
   loadRoom(chosenRoom: Room) {
     this.chatService.getRoom(chosenRoom.id);
     this.currentRoomId = chosenRoom.id;
+    this.currentRoom = this.rooms[this.nameToId(this.currentRoomId)];
   }
 
   nameToId(name: string) {
-    let index = 0;
-    for (const iterator of this.rooms) {
-      if (name === iterator.id) {
-        return index;
+    if (!!this.rooms) {
+      let index = 0;
+      for (const iterator of this.rooms) {
+        if (name === iterator.id) {
+          return index;
+        }
+        index += 1;
       }
-      index += 1;
     }
   }
-  
 }
