@@ -1,17 +1,12 @@
 .sidenav {
-  position: fixed;
-  height: 100%;
   width: 150px;
-  top: 50px;
   left: 0;
   overflow-x: hidden;
-  padding-top: 20px;  
   flex-basis: 15%;
   flex-shrink: 0;
   flex-grow: 0;
   background-color: #300d4f;
   color: #fff;
-  padding: 10px 10px;
     span {
       padding: 6px  8px  6px  16px;
       text-decoration: none;
@@ -34,6 +29,11 @@
   height: calc(100vh - 50px);
 }
 
-.spread {
-  width: 100%;
+.bootstrap-row-override {
+  margin-right: -30px;
+}
+
+.bootstrap-col-override{
+  padding-left: 0;
+  padding-right: 0;
 }
