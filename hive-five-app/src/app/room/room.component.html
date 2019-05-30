@@ -5,12 +5,7 @@
     </div>
   </div>
   <div class="message-input--wrapper">
-    <span *ngIf="currentMessage else noContent">
-      <input [(ngModel)]="currentMessage.content" />
-    </span>
-    <ng-template #noContent>
-      <input />
-    </ng-template>
+    <input [(ngModel)]="currentMessage" />
     <button (click)="sendMessage()">Send</button>
   </div>
 </div>

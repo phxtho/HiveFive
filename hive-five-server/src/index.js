@@ -158,13 +158,7 @@ io.on('connection', socket => {
     socket.on('getRoom', roomId => {
         safeJoin(roomId);
         socket.emit('room', rooms[roomId]);
-    });
-
-    socket.on('addRoom', room => {
-        rooms[room.id] = room;
-        safeJoin(room.id);
-        io.emit('rooms', Object.keys(rooms));
-        socket.emit('room', room);
+        io.emit('rooms', rooms);
     });
 
     socket.on('new-message', (data) => {
