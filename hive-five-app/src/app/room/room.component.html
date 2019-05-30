@@ -1,15 +1,15 @@
-<div class = "full-room">
-  <div class = "messages">
+<div class="full-room">
+  <div class="messages">
     <div *ngFor="let prevMessage of room.messages">
       <app-message [message]=prevMessage></app-message>
     </div>
   </div>
   <div class="message-input--wrapper">
-    <span>
-      <input [(ngModel)]="currentMessage" />
+    <span *ngIf="currentMessage else noContent">
+      <input [(ngModel)]="currentMessage.content" />
     </span>
     <ng-template #noContent>
-      <input/>
+      <input />
     </ng-template>
     <button (click)="sendMessage()">Send</button>
   </div>
