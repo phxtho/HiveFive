@@ -132,6 +132,19 @@ let rooms = [
     }
 ];
 
+function findIndexByID(id) {
+    let index = 0;
+    for (const iterator of rooms) {
+        //console.log(iterator.id);
+        //console.log(id);
+        if (iterator.id === id) {
+            return index;
+        }
+        index += 1;
+    }
+    //console.log("WTF");
+}
+
 // When client connects to server fire this call back
 io.on('connection', socket => {
     
@@ -155,10 +168,13 @@ io.on('connection', socket => {
     });
 
     socket.on('new-message', (data) => {
+        console.log(data);
+        let index = findIndexByID(data.roomId);
         // Store message history
-        rooms[data.roomId].messages.push(data.message);
+        rooms[index].messages.push(data.message);
         // Post message to the rest of the room
         socket.to(data.roomId).emit('new-message', data.message);
+        io.emit('rooms', rooms);
     });
 
     socket.on('typing', (data) => {

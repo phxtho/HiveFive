@@ -21,26 +21,7 @@ export class ChatService {
     this.socket.emit('getRoom', id);
   }
 
-  sendMessage(roomId: string, senderName: string, message: Message) {
-    message.sender = senderName;
-    this.socket.emit('new-message', { roomId, message });
+  sendMessage(roomName: string, message: Message) {
+    this.socket.emit('new-message', { roomId: roomName, message });
   }
-
-  // getMessages() {
-  //   let observable = new Observable(observer => {
-  //     this.socket.on('new-message', data => {
-  //       observer.next(data);
-  //     });
-  //   });
-  //   return observable;
-  // }
-
-  // getTyping() {
-  //   let observable = new Observable(observer => {
-  //     this.socket.on('typing', data => {
-  //       observer.next(data);
-  //     });
-  //   });
-  //   return observable;
-  // }
 }
