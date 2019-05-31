@@ -4,7 +4,7 @@
     <span *ngFor='let room of rooms' (click)='loadRoom(room)'>{{room.id}}</span>
   </div>
 
-  <div class='col-12 col-md-10 bootstrap-col-override'> 
-    <app-room class='jusitfied-center' [room]='rooms[nameToId(currentRoomId)]' [sender]=sender></app-room>
+  <div *ngIf="currentRoom" class='col-12 col-md-10 bootstrap-col-override'>
+    <app-room class='jusitfied-center' [room]='currentRoom' [sender]=sender></app-room>
   </div>
 </div>
