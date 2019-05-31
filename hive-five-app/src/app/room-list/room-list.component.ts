@@ -27,7 +27,6 @@ export class RoomListComponent implements OnInit, OnDestroy {
     });
     this.roomListSub = this.chatService.rooms.subscribe(rooms => {
       this.rooms = rooms;
-      console.log('roomList: ' + this.rooms);
     });
   }
 

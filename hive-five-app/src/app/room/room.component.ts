@@ -24,16 +24,23 @@ export class RoomComponent implements OnInit {
       this.room.messages.push(message);
       console.log('in room.init ');
     });
-
-    console.log("entered"); // turn on the server
-    console.log(this.room);
   }
 
   sendMessage() {
-    console.log("sent");
     // Send message to server
     this.chatService.sendMessage(this.room.id, {sender: this.sender, content: this.currentMessage});
     // Clear input field
     this.currentMessage = '';
+    this.scroll();
+  }
+
+  ngAfterViewInit() {
+    this.scroll();
+  }
+
+  scroll(){
+    const lastMessageID = 'message_'+(this.room.messages.length-1);
+    const element = document.getElementById(lastMessageID);
+    element.scrollIntoView();
   }
 }
