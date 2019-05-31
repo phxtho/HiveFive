@@ -18,63 +18,7 @@ let rooms = [
             },
             {
                 sender: 'Phatho',
-                content: 'FOETSEK!'
-            },
-            {
-                sender: 'Ninjakjshwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
-            },
-            {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
-            },
-            {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
-            },
-            {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
-            },
-            {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
-            },
-            {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
-            },
-            {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'FOETSEK!'
+                content: 'C#!'
             }
         ]
     },
@@ -87,7 +31,7 @@ let rooms = [
             },
             {
                 sender: 'Phatho',
-                content: 'FOETSEK!'
+                content: 'Java'
             }
         ]
     },
@@ -100,7 +44,7 @@ let rooms = [
             },
             {
                 sender: 'Phatho',
-                content: 'FOETSEK!'
+                content: 'Web!'
             }
         ]
     },
@@ -113,7 +57,7 @@ let rooms = [
             },
             {
                 sender: 'Phatho',
-                content: 'FOETSEK!'
+                content: 'Design!'
             }
         ]
     },
@@ -126,49 +70,53 @@ let rooms = [
             },
             {
                 sender: 'Phatho',
-                content: 'FOETSEK!'
+                content: 'Git!'
             }
         ]
     }
 ];
 
+// Maps a room name to its index in an array
 function findIndexByID(id) {
     let index = 0;
     for (const iterator of rooms) {
-        //console.log(iterator.id);
-        //console.log(id);
         if (iterator.id === id) {
             return index;
         }
         index += 1;
     }
-    //console.log("WTF");
 }
 
 // When client connects to server fire this call back
 io.on('connection', socket => {
     
-    let previousRoomId;
-    const safeJoin = currentRoomId => {
-        socket.leave(previousRoomId);
-        socket.join(currentRoomId, () => console.log(`Socket ${socket.id} joined room ${currentRoomId}`));
-        previousRoomId = currentRoomId;
+    let currentRoomName = rooms[0].id;
+    
+    const safeJoin = newRoomName => {
+        socket.leave(currentRoomName);
+        socket.join(newRoomName, () => console.log(`Socket ${socket.id} joined room ${newRoomName}`));
+        currentRoomName = newRoomName;
     }
 
-    socket.on('getRoom', roomId => {
-        safeJoin(roomId);
-        socket.emit('room', rooms[roomId]);
-        io.emit('rooms', rooms);
+    socket.on('join-room', roomName => {
+        safeJoin(roomName);
+
+        let roomIndex = findIndexByID(roomName);
+
+        socket.emit('room', rooms[roomIndex]);
     });
 
     socket.on('new-message', (data) => {
-        console.log(data);
+        console.log(socket.id + ' sent a message to '+ data.roomId);
+        
+        // Mapping a room name to a position in room array
         let index = findIndexByID(data.roomId);
+
         // Store message history
         rooms[index].messages.push(data.message);
-        // Post message to the rest of the room
-        socket.to(data.roomId).emit('new-message', data.message);
-        io.emit('rooms', rooms);
+
+        // Post message to the rest of the sockets in room
+        io.to(data.roomId).emit('new-message', data.message);
     });
 
     socket.on('typing', (data) => {
@@ -176,11 +124,9 @@ io.on('connection', socket => {
     });
 
     io.emit('rooms', rooms);
-    io.emit('room', rooms[0]);
-
-    socket.join(rooms[0], () => console.log(`Socket ${socket.id} joined room C#`));
 
     console.log(`Socket ${socket.id} has connected`);
+    safeJoin(currentRoomName);
 });
 
 http.listen(4444, () => {

@@ -17,8 +17,8 @@ export class ChatService {
   // Constructor injection of socket
   constructor(private socket: Socket) {}
 
-  getRoom(id: string) {
-    this.socket.emit('getRoom', id);
+  joinRoom(roomName: string) {
+    this.socket.emit('join-room', roomName);
   }
 
   sendMessage(roomName: string, message: Message) {

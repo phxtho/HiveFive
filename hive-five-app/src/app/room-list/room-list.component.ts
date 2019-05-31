@@ -11,22 +11,24 @@ import { ChatService } from '../services/chat.service';
 })
 export class RoomListComponent implements OnInit, OnDestroy {
   rooms: Room[];
-
-  currentRoomId: string;
+  currentRoom: Room;
+  currentRoomName: string;
   private roomSub: Subscription;
   private roomListSub: Subscription;
 
-  sender: string = "Anonymous";
+  sender: string = 'Anonymous';
 
   constructor(private chatService: ChatService) { }
 
   ngOnInit() {
-    this.roomSub = this.chatService.currentRoom.subscribe(room => {
-      this.currentRoomId = room.id;
-      console.log('roomListID:' + this.currentRoomId);
-    });
     this.roomListSub = this.chatService.rooms.subscribe(rooms => {
       this.rooms = rooms;
+      if (!this.currentRoom) {
+        this.currentRoom = rooms[0];
+      }
+    });
+    this.roomSub = this.chatService.currentRoom.subscribe(room => {
+      this.currentRoom = room;
     });
   }
 
@@ -36,8 +38,8 @@ export class RoomListComponent implements OnInit, OnDestroy {
   }
 
   loadRoom(chosenRoom: Room) {
-    this.chatService.getRoom(chosenRoom.id);
-    this.currentRoomId = chosenRoom.id;
+    this.chatService.joinRoom(chosenRoom.id);
+    this.currentRoomName = chosenRoom.id;
   }
 
   nameToId(name: string) {
@@ -49,5 +51,5 @@ export class RoomListComponent implements OnInit, OnDestroy {
       index += 1;
     }
   }
-  
+
 }

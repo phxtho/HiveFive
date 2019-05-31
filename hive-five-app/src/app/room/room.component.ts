@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ChatService } from '../services/chat.service';
 import { Room } from '../models/room';
 import { Subscription } from 'rxjs';
@@ -8,22 +8,27 @@ import { Subscription } from 'rxjs';
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss'],
 })
-export class RoomComponent implements OnInit {
+export class RoomComponent implements OnInit, OnDestroy {
   @Input() room: Room;
   @Input() sender: string;
   currentMessage: string;
-  messages: Subscription;
-  typing: Subscription;
+  messageSub: Subscription;
+  typingSub: Subscription;
 
   constructor(private chatService: ChatService) { }
 
   ngOnInit() {
-    // loop through all the message history and display it
-    this.typing = this.chatService.messages.subscribe(typing => console.log(typing));
-    this.messages = this.chatService.messages.subscribe(message => {
+    this.typingSub = this.chatService.messages.subscribe(typing => console.log(typing));
+
+    this.messageSub = this.chatService.messages.subscribe(message => {
       this.room.messages.push(message);
-      console.log('in room.init ');
+      console.log(this.room.id + ' room recieved a new message from server ');
     });
+  }
+
+  ngOnDestroy() {
+    this.typingSub.unsubscribe();
+    this.messageSub.unsubscribe();
   }
 
   sendMessage() {
