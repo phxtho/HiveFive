@@ -23,17 +23,12 @@ export class RoomListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.roomListSub = this.chatService.rooms.subscribe(rooms => {
       this.rooms = rooms;
-      console.log('room-list got ' + this.rooms.length + ' rooms from rooms subscrition');
-
       if (!this.currentRoom) {
         this.currentRoom = rooms[0];
       }
-
     });
-
     this.roomSub = this.chatService.currentRoom.subscribe(room => {
       this.currentRoom = room;
-      console.log('room-list got ' + this.currentRoom.id + ' from room subscrition');
     });
   }
 

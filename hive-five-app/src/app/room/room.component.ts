@@ -24,13 +24,9 @@ export class RoomComponent implements OnInit, OnDestroy {
       this.room.messages.push(message);
       console.log(this.room.id + ' room recieved a new message from server ');
     });
-
-    console.log('Initialised ' + this.room.id + ' room component from memory');
   }
 
   ngOnDestroy() {
-    console.log('room has been destroyed');
-
     this.typingSub.unsubscribe();
     this.messageSub.unsubscribe();
   }
@@ -40,7 +36,16 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.chatService.sendMessage(this.room.id, {sender: this.sender, content: this.currentMessage});
     // Clear input field
     this.currentMessage = '';
+    this.scroll();
+  }
 
-    console.log(this.sender + ' in ' + this.room.id + ' room sent message to server');
+  ngAfterViewInit() {
+    this.scroll();
+  }
+
+  scroll(){
+    const lastMessageID = 'message_'+(this.room.messages.length-1);
+    const element = document.getElementById(lastMessageID);
+    element.scrollIntoView();
   }
 }
