@@ -13,12 +13,8 @@ let rooms = [
         id: 'C#',
         messages: [
             {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'C#!'
+                sender: 'C#',
+                content: ''
             }
         ]
     },
@@ -26,12 +22,8 @@ let rooms = [
         id: 'Java',
         messages: [
             {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'Java'
+                sender: 'Java',
+                content: ''
             }
         ]
     },
@@ -39,12 +31,8 @@ let rooms = [
         id: 'Web',
         messages: [
             {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'Web!'
+                sender: 'Web',
+                content: ''
             }
         ]
     },
@@ -52,12 +40,8 @@ let rooms = [
         id: 'Design',
         messages: [
             {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'Design!'
+                sender: 'Design',
+                content: ''
             }
         ]
     },
@@ -65,12 +49,8 @@ let rooms = [
         id: 'Git',
         messages: [
             {
-                sender: 'Ninjashwang',
-                content: 'Yeet!'
-            },
-            {
-                sender: 'Phatho',
-                content: 'Git!'
+                sender: 'Git',
+                content: ''
             }
         ]
     }
