@@ -1,5 +1,10 @@
 // App setup
-const app = require('express')();
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
+const app = express();
+const cors = require('cors');
+const staticRoot = __dirname + '/';
 
 // App Server setup
 const http = require('http').Server(app);
@@ -145,6 +150,26 @@ function findIndexByID(id) {
     //console.log("WTF");
 }
 
+
+app.use(function(req, res, next) {
+    //if the request is not html then move along
+    var accept = req.accepts('html', 'json', 'xml');
+    if (accept !== 'html') {
+        return next();
+    }
+
+    // if the request has a '.' assume that it's for a file, move along
+    var ext = path.extname(req.path);
+    if (ext !== '') {
+        return next();
+    }
+
+    fs.createReadStream(staticRoot + 'index.html').pipe(res);
+
+});
+
+app.use(cors());
+app.use(express.static(staticRoot));
 // When client connects to server fire this call back
 io.on('connection', socket => {
     

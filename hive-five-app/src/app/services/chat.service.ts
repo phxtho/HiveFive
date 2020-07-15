@@ -3,6 +3,7 @@ import { Socket } from 'ngx-socket-io';
 import { Room } from '../models/room';
 import { Message } from '../models/message';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class ChatService {
   typing = this.socket.fromEvent<string>('typing');
 
   // Constructor injection of socket
-  constructor(private socket: Socket) {}
+  constructor(private socket: Socket, private httpClient: HttpClient) {}
 
   getRoom(id: string) {
     this.socket.emit('getRoom', id);
@@ -23,5 +24,9 @@ export class ChatService {
 
   sendMessage(roomName: string, message: Message) {
     this.socket.emit('new-message', { roomId: roomName, message });
+  }
+
+  getNickname(name) {
+    return this.httpClient.post('http://localhost:3000/nickname', {name});
   }
 }

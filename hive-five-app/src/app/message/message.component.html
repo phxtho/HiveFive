@@ -1,4 +1,5 @@
 <div class="message-wrapper">
   <div id="sender">{{message.sender}}</div>
   <div id="message">{{message.content}}</div>
+  <button (click)="getNickname(message.sender)">Get Nickname</button>
 </div>

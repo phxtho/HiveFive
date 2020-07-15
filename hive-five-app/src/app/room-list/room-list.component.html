@@ -1,7 +1,7 @@
 <div class="row bootstrap-row-override">
   <div class="sidenav bg-dark col-12 col-md-2">
     <input [(ngModel)]="sender" placeholder="Anonymous"/>
-    <span *ngFor='let room of rooms' (click)='getRoom(room)'>{{room.id}}</span>
+    <span *ngFor='let room of rooms' (click)='loadRoom(room)'>{{room.id}}</span>
   </div>
 
   <div class='col-12 col-md-10 bootstrap-col-override'> 
