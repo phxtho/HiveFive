@@ -26,7 +26,10 @@ export class ChatService {
     this.socket.emit('new-message', { roomId: roomName, message });
   }
 
-  getNickname(name) {
-    return this.httpClient.post('http://localhost:3000/nickname', {name});
+  getNickname(name): Observable<any> {
+    return this.httpClient.get('http://localhost:3000/nickname', {
+      params:
+        { name }
+    });
   }
 }

@@ -19,7 +19,7 @@ export class MessageComponent implements OnInit {
     console.log(sender);
     this.chatService.getNickname(sender).subscribe((data) => {
       console.log(data);
-      alert(data.name);
+      alert(`Your nickname: ${data.name}`);
     });
   }
 

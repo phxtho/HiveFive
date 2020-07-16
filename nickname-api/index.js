@@ -12,9 +12,9 @@ app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded());
 app.use(cors());
 
-app.post("/nickname", (req, res) => {
-    const name = req.body.name;
-    console.log(req.body);
+app.get("/nickname", (req, res) => {
+    const name = req.query.name;
+    console.log(req);
     res.json({name: name.split("").reverse().join("")});
 });
 
