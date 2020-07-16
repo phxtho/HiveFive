@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-end-svc
+  labels:
+    run: front-end-svc
+spec:
+  type: NodePort
+  ports:
+  - port: 4444
+    protocol: TCP
+    nodePort: 30000
+  selector:
+    app: front-end
