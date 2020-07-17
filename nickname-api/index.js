@@ -14,7 +14,7 @@ app.use(cors());
 
 app.get("/nickname", (req, res) => {
     const name = req.query.name;
-    console.log(req);
+    console.log('api', req);
     res.json({name: name.split("").reverse().join("")});
 });
 

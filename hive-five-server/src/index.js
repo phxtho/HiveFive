@@ -7,7 +7,8 @@ const cors = require('cors');
 const staticRoot = __dirname + '/';
 
 // App Server setup
-const http = require('http').Server(app);
+const httpLib = require('http');
+const http = httpLib.Server(app);
 
 // Socket setup
 const io = require('socket.io')(http);
@@ -150,6 +151,7 @@ function findIndexByID(id) {
     //console.log("WTF");
 }
 
+app.use(cors());
 
 app.use(function(req, res, next) {
     //if the request is not html then move along
@@ -165,10 +167,33 @@ app.use(function(req, res, next) {
     }
 
     fs.createReadStream(staticRoot + 'index.html').pipe(res);
-
 });
 
-app.use(cors());
+app.get("/nickname", (req, res) => {
+    const name = req.query.name;
+    console.log('backend', req);
+
+    httpLib.get(`http://localhost:30001/nickname?name=${name}`, (resp) => {
+    let data = '';
+
+    // A chunk of data has been recieved.
+    resp.on('data', (chunk) => {
+        data += chunk;
+    });
+
+    // The whole response has been received. Print out the result.
+    resp.on('end', () => {
+        console.log(JSON.parse(data).explanation);
+        res.json({name: data})
+    });
+
+    }).on("error", (err) => {
+    console.log("Error: " + err.message);
+    });
+
+    res.json({name: name.split("").reverse().join("")});
+});
+
 app.use(express.static(staticRoot));
 // When client connects to server fire this call back
 io.on('connection', socket => {

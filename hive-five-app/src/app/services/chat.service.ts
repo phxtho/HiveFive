@@ -27,7 +27,7 @@ export class ChatService {
   }
 
   getNickname(name): Observable<any> {
-    return this.httpClient.get('http://localhost:30001/nickname', {
+    return this.httpClient.get('http://localhost:30000/nickname', {
       params:
         { name }
     });
