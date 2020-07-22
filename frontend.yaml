@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: front-end
-        image: jasp19/hive-five-node
+        image: phxtho/hivefive-micro-ui
         imagePullPolicy: "Always"
         ports:
           - containerPort: 4444
