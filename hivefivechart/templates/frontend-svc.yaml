@@ -8,7 +8,5 @@ spec:
   type: NodePort
   ports:
   - port: 4444
-    protocol: TCP
-    nodePort: 30000
   selector:
     app: front-end

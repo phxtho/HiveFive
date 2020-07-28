@@ -14,7 +14,7 @@ import { RoomListComponent } from './room-list/room-list.component';
 import { MessageComponent } from './message/message.component';
 
 // Server listening on port 4444
-const config: SocketIoConfig = { url: 'http://localhost:30000', options: {} };
+const config: SocketIoConfig = { url: 'http://localhost', options: {} };
 
 @NgModule({
   declarations: [

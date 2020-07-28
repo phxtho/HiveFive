@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-end
+  labels:
+    app: front-end
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: front-end
+  template:
+    metadata:
+      labels:
+        app: front-end
+    spec:
+      containers:
+      - name: front-end
+        image: phxtho/hivefive-micro-ui
+        imagePullPolicy: "IfNotPresent"
+        ports:
+          - containerPort: 4444
+        resources:
+          requests:
+            memory: "250Mi"
+            cpu: "200m"
+          limits:
+            memory: "300Mi"
+            cpu: "250Mi"
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 4444
+          initialDelaySeconds: 5
+          periodSeconds: 3

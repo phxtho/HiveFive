@@ -173,7 +173,7 @@ app.get("/nickname", (req, res) => {
     const name = req.query.name;
     console.log('backend', req);
 
-    httpLib.get(`http://localhost:30001/nickname?name=${name}`, (resp) => {
+    httpLib.get(`http://api-svc.default.svc.cluster.local/nickname?name=${name}`, (resp) => {
     let data = '';
 
     // A chunk of data has been recieved.
@@ -193,6 +193,12 @@ app.get("/nickname", (req, res) => {
 
     res.json({name: name.split("").reverse().join("")});
 });
+
+// For k8s readiness probe
+app.get("/ready", (req, res) => {
+    res.sendStatus(200);
+});
+  
 
 app.use(express.static(staticRoot));
 // When client connects to server fire this call back
